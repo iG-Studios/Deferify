@@ -1,0 +1,26 @@
+local Run = require(script.Deferify)
+
+Run(function()
+	task.wait(5)
+	print("Echo...")
+	task.wait(1)
+	print("Echo!")
+end).WhichShould().NotTakeLongerThan(7).AndAlso().NotThrow().AndThen(function()
+	print("Echo done!")
+end).WhileAlso(function()
+	task.wait(1)
+	print("woah!")
+end).WhileAlso(function()
+	task.wait(2)
+	print("oof!")
+	error("I errored!")
+end).WhichShould().Throw().AndThen(function()
+	print("done!")
+	task.wait(1)
+end).WhileAlso(function()
+	while task.wait(10) do
+		print("Hello, world!")
+	end
+end).WhichShould().InfinitelyYield()
+
+print("Started the script!")
