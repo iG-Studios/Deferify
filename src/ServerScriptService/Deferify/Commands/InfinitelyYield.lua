@@ -6,13 +6,13 @@ local FollowCommandChain = require(Modules.FollowCommandChain)
 self.CanBeFollowedBy = {"WhileAlso", "AndThen", "AndAlso"}
 
 self.FunctionsAs = function(...)
-	local Time, Event = ...
+	local Time, CompletionEvent = ...
 	
-	Event:Connect(function(Delta, Traceback)
-		error("Infinite yield expected, but task ended: " .. Traceback)
+	CompletionEvent:Connect(function(Delta, Traceback)
+		error("Infinite yield expected, but task ended/n" .. Traceback)
 	end)
 	
-	return FollowCommandChain(self.CanBeFollowedBy, Event)
+	return FollowCommandChain(self.CanBeFollowedBy, CompletionEvent)
 end
 
 return self
